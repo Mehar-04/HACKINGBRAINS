@@ -1,0 +1,31 @@
+class Solution:
+    def splitArray(self, nums: List[int]) -> int:
+        lmap = {0: nums[0]}
+        rmap = {len(nums) - 1: nums[-1]}
+
+        lsum, rsum = nums[0], nums[-1]
+        i, j = 1, len(nums) - 2
+        while i < len(nums):
+            if nums[i] > nums[i - 1]:
+                lsum += nums[i]
+                lmap[i] = lsum
+                i += 1
+            
+            else:
+                break
+                
+        while j >= 0:
+            if nums[j] > nums[j + 1]:
+                rsum += nums[j]
+                rmap[j] = rsum
+                j -= 1
+            
+            else:
+                break
+        mindiff = float('inf')
+        for i in lmap:
+            if i + 1 in rmap:
+                mindiff = min(mindiff, abs(lmap[i] - rmap[i + 1]))
+
+        return mindiff if mindiff != float('inf') else -1
+            
